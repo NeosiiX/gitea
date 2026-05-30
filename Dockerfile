@@ -25,13 +25,13 @@ WORKDIR ${GOPATH}/src/gitea.dev
 COPY go.mod go.sum ./
 RUN go mod download
 # Use COPY instead of bind mount as read-only one breaks makefile state tracking and read-write one needs binary to be moved as it's discarded.
-# ".git" directory is mounted separately later only for version data extraction.
+# ".git" directory is copied separately below for version data extraction.
 COPY --exclude=.git/ . .
 COPY --from=frontend-build /src/public/assets public/assets
 
-# Build gitea, .git mount is required for version data
+# Build gitea, .git is required for version data
+COPY .git/ .git/
 RUN --mount=type=cache,id=s/81415cd9-6519-4566-a6ef-b6e13f161d2b-/root/.cache/go-build,target="/root/.cache/go-build" \
-    --mount=type=bind,source=".git/",target=".git/" \
     make backend
 
 COPY docker/root /tmp/local
