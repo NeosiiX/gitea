@@ -64,11 +64,10 @@
 		{{else if .IsSigned}}
 			{{template "base/head_navbar_icons" dict "ItemExtraClass" "not-mobile" "PageGlobalData" .PageGlobalData}}
 			<div class="ui dropdown jump item" data-tooltip-content="{{ctx.Locale.Tr "create_new"}}">
-				<span class="flex-text-block">
-					{{svg "octicon-plus"}}
+				<div class="ui primary small button" style="display: flex; align-items: center; gap: 5px;">
+					Créer
 					<span class="not-mobile flex-text-block">{{svg "octicon-triangle-down"}}</span>
-					<span class="only-mobile">{{ctx.Locale.Tr "create_new"}}</span>
-				</span>
+				</div>
 				<div class="menu">
 					<a class="item" href="{{AppSubUrl}}/repo/create">
 						{{svg "octicon-plus"}} {{ctx.Locale.Tr "new_repo"}}
